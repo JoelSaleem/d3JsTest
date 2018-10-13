@@ -1,0 +1,42 @@
+<body>
+  <h1>Bar Chart</h1>
+
+  <svg class="bar-chart"></svg>
+</body>
+
+<script src="https://d3js.org/d3.v5.js"></script>
+
+<script>
+  // An example of appending an html tag to the random
+  d3.select('body').append('p').text('This is an example of a bar chart')
+
+  // initialise dataset
+  let dataset = [];
+  for (let i = 0; i < 10; i++) {
+    dataset.push((Math.random()*200));
+  }
+
+  // set up dimensions
+  let svgWidth = 500, svgHeight = 300, barPadding = 5;
+  let barWidth = svgWidth / dataset.length;
+
+  let svg = d3.select('svg').attr('width', svgWidth).attr('height', svgHeight);
+
+  let barChart = svg.selectAll('rect')
+    .data(dataset)
+    .enter()
+    .append('rect')
+    .attr('y', function (d) {
+      return svgHeight - d;
+    })
+    .attr('height', function(d) {
+      return d;
+    })
+    .attr('width', barWidth - barPadding)
+    .attr('transform', function (d, i) {
+      let translate = [barWidth * i, 0];
+      return 'translate(' + translate + ')';
+    });
+
+
+</script>
